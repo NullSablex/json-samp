@@ -1,0 +1,123 @@
+/*
+ * json_samp v2.0.0 - JSON plugin for SA-MP and Open Multiplayer.
+ * Author:     NullSablex
+ * Repository: https://github.com/NullSablex/json-samp
+ * License:    AGPL-3.0-or-later
+ */
+
+#if defined _json_samp_included
+    #endinput
+#endif
+#define _json_samp_included
+
+#pragma library json_samp
+
+#define JSON_SAMP_VERSION "2.0.0"
+
+// JSON value types (returned by json_type)
+enum {
+    JSON_TYPE_NULL = 0,
+    JSON_TYPE_BOOL,
+    JSON_TYPE_NUMBER,
+    JSON_TYPE_STRING,
+    JSON_TYPE_ARRAY,
+    JSON_TYPE_OBJECT,
+}
+
+// Log levels
+enum {
+    JSON_LOG_NONE = 0,
+    JSON_LOG_ERROR,
+    JSON_LOG_WARNING,
+    JSON_LOG_INFO,
+    JSON_LOG_ALL,
+}
+
+// Logging
+native bool:json_log(log_level);
+
+// Parse / free
+native json_parse(const json_str[], &out_id);
+native json_free(ptr);
+
+// Get (level 1, by key)
+native json_get_string(ptr, const key[], output[], size = sizeof(output));
+native json_get_int(ptr, const key[], &output);
+native json_get_float(ptr, const key[], &Float:output);
+native json_get_bool(ptr, const key[], &output);
+
+// Checks
+native json_is_valid(const json_str[]);
+native json_has_key(ptr, const key[]);
+
+// Create / set
+native json_create(&out_id);
+native json_create_array(&out_id);
+native json_set_string(ptr, const key[], const value[]);
+native json_set_bool(ptr, const key[], value);
+native json_set_int(ptr, const key[], value);
+native json_set_float(ptr, const key[], Float:value);
+native json_set_null(ptr, const key[]);
+
+// File I/O
+native json_open_file(const path[], &out_id);
+native json_save_file(ptr, const path[]);
+native json_create_file(const path[]);
+native json_reload_file(ptr, const path[]);
+
+// Arrays / object (level 1)
+native json_append_array(ptr, const key[], const value_json[]);
+native json_delete_key(ptr, const key[]);
+native json_exists_key(ptr, const key[]); // synonym of json_has_key
+native json_object_len(ptr, &out_len);
+native json_object_key_at(ptr, index, output[], size = sizeof(output));
+native json_array_len(ptr, const key[], &out_len);
+native json_array_get_string(ptr, const key[], index, const field[], output[], size = sizeof(output));
+native json_array_get_int(ptr, const key[], index, const field[], &output);
+native json_array_get_float(ptr, const key[], index, const field[], &Float:output);
+native json_array_get_bool(ptr, const key[], index, const field[], &output);
+
+// Array operations (handle is itself an array)
+native json_array_append(ptr, const value_json[]);
+native json_array_append_string(ptr, const value[]);
+native json_array_append_int(ptr, value);
+native json_array_append_float(ptr, Float:value);
+native json_array_append_bool(ptr, value);
+native json_array_append_null(ptr);
+native json_array_remove(ptr, index);
+
+// Path-based API (JSON Pointer "/a/0/b" OR friendly "a[0].b")
+native json_exists_at(ptr, const path[]);
+native json_get_string_at(ptr, const path[], output[], size = sizeof(output));
+native json_get_int_at(ptr, const path[], &output);
+native json_get_float_at(ptr, const path[], &Float:output);
+native json_get_bool_at(ptr, const path[], &output);
+
+// Inspection and navigation
+native json_type(ptr, &out_type); // see JSON_TYPE_* enum
+native json_len(ptr, &out_len);   // array/object -> size; otherwise -> 0
+native json_key_at(ptr, index, output[], size = sizeof(output)); // object only
+native json_item(ptr, index, &out_ptr);          // array only
+native json_at(ptr, const path[], &out_ptr);     // creates a handle for the subnode
+
+// Path-based mutation
+native json_set_at(ptr, const path[], const value_json[]);
+native json_set_string_at(ptr, const path[], const value[]);
+native json_set_int_at(ptr, const path[], value);
+native json_set_float_at(ptr, const path[], Float:value);
+native json_set_bool_at(ptr, const path[], value);
+native json_set_null_at(ptr, const path[]);
+native json_delete_at(ptr, const path[]);
+
+// Handle-level operations
+native json_clone(ptr, &out_id);
+native json_clear(ptr);
+native json_merge(dest_ptr, src_ptr);
+native json_is_array(ptr);
+native json_is_object(ptr);
+native json_count();
+native json_equals(ptr_a, ptr_b);
+
+// Serialize
+native json_to_string(ptr, output[], size = sizeof(output));
+native json_to_string_pretty(ptr, output[], size = sizeof(output));
