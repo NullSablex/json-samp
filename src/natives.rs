@@ -364,7 +364,10 @@ impl crate::Plugin {
         match self.array_append_handle(id, val) {
             Ok(()) => Ok(1),
             Err(DocErr::WrongType) => {
-                Logger::warn(&format!("(E049) Node is not an array in json_array_append (ID {})", id));
+                Logger::warn(&format!(
+                    "(E049) Node is not an array in json_array_append (ID {})",
+                    id
+                ));
                 Ok(0)
             }
             Err(DocErr::NotFound) => {
@@ -437,7 +440,10 @@ impl crate::Plugin {
                 let idx: usize = match last.parse() {
                     Ok(n) => n,
                     Err(_) => {
-                        Logger::warn(&format!("(E052) Invalid index '{}' in '{}'", last, path_str));
+                        Logger::warn(&format!(
+                            "(E052) Invalid index '{}' in '{}'",
+                            last, path_str
+                        ));
                         return 0;
                     }
                 };
@@ -448,7 +454,10 @@ impl crate::Plugin {
                 1
             }
             _ => {
-                Logger::warn(&format!("(E053) Parent node is not a container in '{}'", path_str));
+                Logger::warn(&format!(
+                    "(E053) Parent node is not a container in '{}'",
+                    path_str
+                ));
                 0
             }
         }
@@ -629,7 +638,10 @@ impl crate::Plugin {
                 }
             },
             None => {
-                Logger::warn(&format!("(E005) Key '{}' not found in json_get_string", key_str));
+                Logger::warn(&format!(
+                    "(E005) Key '{}' not found in json_get_string",
+                    key_str
+                ));
                 return Ok(0);
             }
         };
@@ -736,11 +748,23 @@ impl crate::Plugin {
                 Ok(1)
             }
             Err(FileLoadErr::Io(e)) => {
-                Logger::error_detail(&format!("(E011) Failed to read '{}' (from '{}')", path_str, raw), &format!("(E011) Failed to read '{}' (from '{}'): {}", path_str, raw, e));
+                Logger::error_detail(
+                    &format!("(E011) Failed to read '{}' (from '{}')", path_str, raw),
+                    &format!(
+                        "(E011) Failed to read '{}' (from '{}'): {}",
+                        path_str, raw, e
+                    ),
+                );
                 Ok(0)
             }
             Err(FileLoadErr::Parse(e)) => {
-                Logger::error_detail(&format!("(E012) Invalid JSON in '{}' (from '{}')", path_str, raw), &format!("(E012) Invalid JSON in '{}' (from '{}'): {}", path_str, raw, e));
+                Logger::error_detail(
+                    &format!("(E012) Invalid JSON in '{}' (from '{}')", path_str, raw),
+                    &format!(
+                        "(E012) Invalid JSON in '{}' (from '{}'): {}",
+                        path_str, raw, e
+                    ),
+                );
                 Ok(0)
             }
         }
@@ -764,15 +788,30 @@ impl crate::Plugin {
         match write_json_file(&path_str, value) {
             Ok(()) => Ok(1),
             Err(FileSaveErr::Serialize(e)) => {
-                Logger::error_detail(&format!("(E014) Failed to serialize JSON of ID {}", id), &format!("(E014) Failed to serialize JSON of ID {}: {}", id, e));
+                Logger::error_detail(
+                    &format!("(E014) Failed to serialize JSON of ID {}", id),
+                    &format!("(E014) Failed to serialize JSON of ID {}: {}", id, e),
+                );
                 Ok(0)
             }
             Err(FileSaveErr::Mkdir(e)) => {
-                Logger::error_detail(&format!("(E015) Failed to create directories for '{}'", path_str), &format!("(E015) Failed to create directories for '{}': {}", path_str, e));
+                Logger::error_detail(
+                    &format!("(E015) Failed to create directories for '{}'", path_str),
+                    &format!(
+                        "(E015) Failed to create directories for '{}': {}",
+                        path_str, e
+                    ),
+                );
                 Ok(0)
             }
             Err(FileSaveErr::Write(e)) => {
-                Logger::error_detail(&format!("(E016) Failed to write '{}' (from '{}')", path_str, raw), &format!("(E016) Failed to write '{}' (from '{}'): {}", path_str, raw, e));
+                Logger::error_detail(
+                    &format!("(E016) Failed to write '{}' (from '{}')", path_str, raw),
+                    &format!(
+                        "(E016) Failed to write '{}' (from '{}'): {}",
+                        path_str, raw, e
+                    ),
+                );
                 Ok(0)
             }
         }
@@ -789,11 +828,23 @@ impl crate::Plugin {
         match create_empty_json_file(&path_str) {
             Ok(_) => Ok(1),
             Err(FileCreateErr::Mkdir(e)) => {
-                Logger::error_detail(&format!("(E018) Failed to create directories for '{}'", path_str), &format!("(E018) Failed to create directories for '{}': {}", path_str, e));
+                Logger::error_detail(
+                    &format!("(E018) Failed to create directories for '{}'", path_str),
+                    &format!(
+                        "(E018) Failed to create directories for '{}': {}",
+                        path_str, e
+                    ),
+                );
                 Ok(0)
             }
             Err(FileCreateErr::Write(e)) => {
-                Logger::error_detail(&format!("(E019) Failed to create '{}' (from '{}')", path_str, raw), &format!("(E019) Failed to create '{}' (from '{}'): {}", path_str, raw, e));
+                Logger::error_detail(
+                    &format!("(E019) Failed to create '{}' (from '{}')", path_str, raw),
+                    &format!(
+                        "(E019) Failed to create '{}' (from '{}'): {}",
+                        path_str, raw, e
+                    ),
+                );
                 Ok(0)
             }
         }
@@ -817,11 +868,23 @@ impl crate::Plugin {
                 Ok(1)
             }
             Err(FileLoadErr::Io(e)) => {
-                Logger::error_detail(&format!("(E021) Failed to read '{}' (from '{}')", path_str, raw), &format!("(E021) Failed to read '{}' (from '{}'): {}", path_str, raw, e));
+                Logger::error_detail(
+                    &format!("(E021) Failed to read '{}' (from '{}')", path_str, raw),
+                    &format!(
+                        "(E021) Failed to read '{}' (from '{}'): {}",
+                        path_str, raw, e
+                    ),
+                );
                 Ok(0)
             }
             Err(FileLoadErr::Parse(e)) => {
-                Logger::error_detail(&format!("(E022) Invalid JSON in '{}' (from '{}')", path_str, raw), &format!("(E022) Invalid JSON in '{}' (from '{}'): {}", path_str, raw, e));
+                Logger::error_detail(
+                    &format!("(E022) Invalid JSON in '{}' (from '{}')", path_str, raw),
+                    &format!(
+                        "(E022) Invalid JSON in '{}' (from '{}'): {}",
+                        path_str, raw, e
+                    ),
+                );
                 Ok(0)
             }
         }
@@ -842,14 +905,20 @@ impl crate::Plugin {
         let val: Value = match serde_json::from_str(&val_str) {
             Ok(v) => v,
             Err(e) => {
-                Logger::error_detail(&format!("(E023) Invalid value_json for '{}'", key_str), &format!("(E023) Invalid value_json for '{}': {}", key_str, e));
+                Logger::error_detail(
+                    &format!("(E023) Invalid value_json for '{}'", key_str),
+                    &format!("(E023) Invalid value_json for '{}': {}", key_str, e),
+                );
                 return Ok(0);
             }
         };
         match self.append_array_key(id, &key_str, val) {
             AppendKeyOutcome::Done => Ok(1),
             AppendKeyOutcome::KeyNotArray => {
-                Logger::warn(&format!("(E024) '{}' is not an array in ID {}", key_str, id));
+                Logger::warn(&format!(
+                    "(E024) '{}' is not an array in ID {}",
+                    key_str, id
+                ));
                 Ok(0)
             }
             AppendKeyOutcome::NotObject => Ok(0),
@@ -903,7 +972,10 @@ impl crate::Plugin {
                 Ok(0)
             }
             None => {
-                Logger::warn(&format!("(E032) Invalid index {} in json_object_key_at", index));
+                Logger::warn(&format!(
+                    "(E032) Invalid index {} in json_object_key_at",
+                    index
+                ));
                 Ok(0)
             }
         }
@@ -926,12 +998,14 @@ impl crate::Plugin {
         match self.pool.get(&id) {
             None => Logger::warn(&format!("(E002) ID {} not found in json_array_len", id)),
             Some(v) => match v.as_object().and_then(|m| m.get(&key_str)) {
-                Some(_) => {
-                    Logger::warn(&format!("(E034) '{}' is not an array in json_array_len", key_str))
-                }
-                None => {
-                    Logger::warn(&format!("(E005) Key '{}' not found in json_array_len", key_str))
-                }
+                Some(_) => Logger::warn(&format!(
+                    "(E034) '{}' is not an array in json_array_len",
+                    key_str
+                )),
+                None => Logger::warn(&format!(
+                    "(E005) Key '{}' not found in json_array_len",
+                    key_str
+                )),
             },
         }
         Ok(0)
@@ -954,18 +1028,27 @@ impl crate::Plugin {
         let root = match self.pool.get(&id) {
             Some(v) => v,
             None => {
-                Logger::warn(&format!("(E002) ID {} not found in json_array_get_string", id));
+                Logger::warn(&format!(
+                    "(E002) ID {} not found in json_array_get_string",
+                    id
+                ));
                 return Ok(0);
             }
         };
         let arr = match root.as_object().and_then(|m| m.get(&key_str)) {
             Some(Value::Array(a)) => a,
             Some(_) => {
-                Logger::warn(&format!("(E035) '{}' is not an array in json_array_get_string", key_str));
+                Logger::warn(&format!(
+                    "(E035) '{}' is not an array in json_array_get_string",
+                    key_str
+                ));
                 return Ok(0);
             }
             None => {
-                Logger::warn(&format!("(E005) Key '{}' not found in json_array_get_string", key_str));
+                Logger::warn(&format!(
+                    "(E005) Key '{}' not found in json_array_get_string",
+                    key_str
+                ));
                 return Ok(0);
             }
         };
@@ -973,7 +1056,10 @@ impl crate::Plugin {
         let field_val = match item {
             Some(Value::Object(map)) => map.get(&field_str),
             _ => {
-                Logger::warn(&format!("(E037) Invalid index {} or missing object in '{}'", index, key_str));
+                Logger::warn(&format!(
+                    "(E037) Invalid index {} or missing object in '{}'",
+                    index, key_str
+                ));
                 return Ok(0);
             }
         };
@@ -982,7 +1068,10 @@ impl crate::Plugin {
             Some(Value::Number(n)) => n.to_string(),
             Some(Value::Bool(b)) => b.to_string(),
             _ => {
-                Logger::warn(&format!("(E038) Field '{}' missing or not a string in {}[{}]", field_str, key_str, index));
+                Logger::warn(&format!(
+                    "(E038) Field '{}' missing or not a string in {}[{}]",
+                    field_str, key_str, index
+                ));
                 return Ok(0);
             }
         };
@@ -1003,7 +1092,11 @@ impl crate::Plugin {
                 return Ok(0);
             }
         };
-        Ok(if get_at(root, &tokens).is_some() { 1 } else { 0 })
+        Ok(if get_at(root, &tokens).is_some() {
+            1
+        } else {
+            0
+        })
     }
 
     #[native(name = "json_get_string_at")]
@@ -1034,7 +1127,10 @@ impl crate::Plugin {
         let text = match value_as_text(node) {
             Some(s) => s,
             None => {
-                Logger::warn(&format!("(E042) Value at '{}' is not a string/serializable", path_str));
+                Logger::warn(&format!(
+                    "(E042) Value at '{}' is not a string/serializable",
+                    path_str
+                ));
                 return Ok(0);
             }
         };
@@ -1290,19 +1386,28 @@ impl crate::Plugin {
                 let idx: usize = match last.parse() {
                     Ok(n) => n,
                     Err(_) => {
-                        Logger::warn(&format!("(E052) Invalid index '{}' in '{}'", last, path_str));
+                        Logger::warn(&format!(
+                            "(E052) Invalid index '{}' in '{}'",
+                            last, path_str
+                        ));
                         return 0;
                     }
                 };
                 if idx >= arr.len() {
-                    Logger::warn(&format!("(E052) Index {} out of bounds in '{}'", idx, path_str));
+                    Logger::warn(&format!(
+                        "(E052) Index {} out of bounds in '{}'",
+                        idx, path_str
+                    ));
                     return 0;
                 }
                 arr[idx] = new_val;
                 1
             }
             _ => {
-                Logger::warn(&format!("(E053) Parent node is not a container in '{}'", path_str));
+                Logger::warn(&format!(
+                    "(E053) Parent node is not a container in '{}'",
+                    path_str
+                ));
                 0
             }
         }
@@ -1369,7 +1474,10 @@ impl crate::Plugin {
         let num = match serde_json::Number::from_f64(value as f64) {
             Some(n) => n,
             None => {
-                Logger::warn(&format!("(E055) Non-finite float in json_set_float_at at '{}'", path_str));
+                Logger::warn(&format!(
+                    "(E055) Non-finite float in json_set_float_at at '{}'",
+                    path_str
+                ));
                 return Ok(0);
             }
         };
@@ -1435,12 +1543,18 @@ impl crate::Plugin {
             Some(Value::Object(map)) => match map.get(field) {
                 Some(v) => Some(v),
                 None => {
-                    Logger::warn(&format!("(E038) Field '{}' missing in {}[{}]", field, key, index));
+                    Logger::warn(&format!(
+                        "(E038) Field '{}' missing in {}[{}]",
+                        field, key, index
+                    ));
                     None
                 }
             },
             _ => {
-                Logger::warn(&format!("(E037) Invalid index {} or missing object in '{}'", index, key));
+                Logger::warn(&format!(
+                    "(E037) Invalid index {} or missing object in '{}'",
+                    index, key
+                ));
                 None
             }
         }
@@ -1560,12 +1674,7 @@ impl crate::Plugin {
 
     /// Appends `value_json` to a handle that is itself an array.
     #[native(name = "json_array_append")]
-    pub fn json_array_append(
-        &mut self,
-        _: &Amx,
-        id: i32,
-        value_json: AmxString,
-    ) -> AmxResult<i32> {
+    pub fn json_array_append(&mut self, _: &Amx, id: i32, value_json: AmxString) -> AmxResult<i32> {
         let val_str = amx_cstr(&value_json);
         let val: Value = match serde_json::from_str(&val_str) {
             Ok(v) => v,
@@ -1622,11 +1731,17 @@ impl crate::Plugin {
         match self.array_remove_handle(id, index) {
             Ok(true) => Ok(1),
             Ok(false) => {
-                Logger::warn(&format!("(E032) Invalid index {} in json_array_remove", index));
+                Logger::warn(&format!(
+                    "(E032) Invalid index {} in json_array_remove",
+                    index
+                ));
                 Ok(0)
             }
             Err(DocErr::WrongType) => {
-                Logger::warn(&format!("(E049) Node is not an array in json_array_remove (ID {})", id));
+                Logger::warn(&format!(
+                    "(E049) Node is not an array in json_array_remove (ID {})",
+                    id
+                ));
                 Ok(0)
             }
             Err(DocErr::NotFound) => {
@@ -1657,7 +1772,10 @@ impl crate::Plugin {
         match self.clear_doc(id) {
             Ok(()) => Ok(1),
             Err(DocErr::WrongType) => {
-                Logger::warn(&format!("(E057) Node is not a container in json_clear (ID {})", id));
+                Logger::warn(&format!(
+                    "(E057) Node is not a container in json_clear (ID {})",
+                    id
+                ));
                 Ok(0)
             }
             Err(DocErr::NotFound) => {
@@ -1673,19 +1791,31 @@ impl crate::Plugin {
         match self.merge_docs(dest_id, src_id) {
             Ok(()) => Ok(1),
             Err(MergeErr::SrcNotObject) => {
-                Logger::warn(&format!("(E058) Source ID {} is not an object in json_merge", src_id));
+                Logger::warn(&format!(
+                    "(E058) Source ID {} is not an object in json_merge",
+                    src_id
+                ));
                 Ok(0)
             }
             Err(MergeErr::SrcNotFound) => {
-                Logger::warn(&format!("(E047) Source ID {} not found in json_merge", src_id));
+                Logger::warn(&format!(
+                    "(E047) Source ID {} not found in json_merge",
+                    src_id
+                ));
                 Ok(0)
             }
             Err(MergeErr::DestNotObject) => {
-                Logger::warn(&format!("(E058) Destination ID {} is not an object in json_merge", dest_id));
+                Logger::warn(&format!(
+                    "(E058) Destination ID {} is not an object in json_merge",
+                    dest_id
+                ));
                 Ok(0)
             }
             Err(MergeErr::DestNotFound) => {
-                Logger::warn(&format!("(E047) Destination ID {} not found in json_merge", dest_id));
+                Logger::warn(&format!(
+                    "(E047) Destination ID {} not found in json_merge",
+                    dest_id
+                ));
                 Ok(0)
             }
         }
@@ -1842,13 +1972,22 @@ mod tests {
 
     #[test]
     fn resolve_scriptfiles_path_prefixes_relative_names() {
-        assert_eq!(resolve_scriptfiles_path("data.json"), "scriptfiles/data.json");
-        assert_eq!(resolve_scriptfiles_path("dir/data.json"), "scriptfiles/dir/data.json");
+        assert_eq!(
+            resolve_scriptfiles_path("data.json"),
+            "scriptfiles/data.json"
+        );
+        assert_eq!(
+            resolve_scriptfiles_path("dir/data.json"),
+            "scriptfiles/dir/data.json"
+        );
     }
 
     #[test]
     fn resolve_scriptfiles_path_keeps_explicit_paths() {
-        assert_eq!(resolve_scriptfiles_path("scriptfiles/x.json"), "scriptfiles/x.json");
+        assert_eq!(
+            resolve_scriptfiles_path("scriptfiles/x.json"),
+            "scriptfiles/x.json"
+        );
         assert_eq!(resolve_scriptfiles_path("./x.json"), "./x.json");
         assert_eq!(resolve_scriptfiles_path("../x.json"), "../x.json");
         assert_eq!(resolve_scriptfiles_path("/abs/x.json"), "/abs/x.json");
@@ -1857,7 +1996,10 @@ mod tests {
 
     #[test]
     fn resolve_scriptfiles_path_normalizes_backslashes_and_empty() {
-        assert_eq!(resolve_scriptfiles_path("dir\\x.json"), "scriptfiles/dir/x.json");
+        assert_eq!(
+            resolve_scriptfiles_path("dir\\x.json"),
+            "scriptfiles/dir/x.json"
+        );
         assert_eq!(resolve_scriptfiles_path("   "), "");
         assert_eq!(resolve_scriptfiles_path(""), "");
     }
@@ -2096,7 +2238,10 @@ mod tests {
     fn value_as_text_returns_strings_verbatim_else_serialized() {
         assert_eq!(value_as_text(&json!("hi")), Some("hi".to_string()));
         assert_eq!(value_as_text(&json!(42)), Some("42".to_string()));
-        assert_eq!(value_as_text(&json!({ "a": 1 })), Some(r#"{"a":1}"#.to_string()));
+        assert_eq!(
+            value_as_text(&json!({ "a": 1 })),
+            Some(r#"{"a":1}"#.to_string())
+        );
     }
 
     // ---------------- simple pool cores ----------------
@@ -2158,7 +2303,10 @@ mod tests {
         let mut p = plugin();
         let id = p.alloc_id_and_insert(json!({ "a": 1 }));
         assert_eq!(p.to_text_doc(id, false), Some(r#"{"a":1}"#.to_string()));
-        assert_eq!(p.to_text_doc(id, true), Some("{\n  \"a\": 1\n}".to_string()));
+        assert_eq!(
+            p.to_text_doc(id, true),
+            Some("{\n  \"a\": 1\n}".to_string())
+        );
         assert_eq!(p.to_text_doc(999, false), None);
     }
 
@@ -2276,8 +2424,14 @@ mod tests {
     fn append_array_key_creates_or_pushes() {
         let mut p = plugin();
         let id = p.alloc_id_and_insert(json!({ "list": [1], "scalar": 9 }));
-        assert_eq!(p.append_array_key(id, "list", json!(2)), AppendKeyOutcome::Done);
-        assert_eq!(p.append_array_key(id, "new", json!("a")), AppendKeyOutcome::Done);
+        assert_eq!(
+            p.append_array_key(id, "list", json!(2)),
+            AppendKeyOutcome::Done
+        );
+        assert_eq!(
+            p.append_array_key(id, "new", json!("a")),
+            AppendKeyOutcome::Done
+        );
         assert_eq!(p.pool[&id]["list"], json!([1, 2]));
         assert_eq!(p.pool[&id]["new"], json!(["a"]));
         assert_eq!(
@@ -2285,7 +2439,10 @@ mod tests {
             AppendKeyOutcome::KeyNotArray
         );
         let arr = p.alloc_id_and_insert(json!([]));
-        assert_eq!(p.append_array_key(arr, "k", json!(1)), AppendKeyOutcome::NotObject);
+        assert_eq!(
+            p.append_array_key(arr, "k", json!(1)),
+            AppendKeyOutcome::NotObject
+        );
     }
 
     #[test]
