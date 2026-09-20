@@ -37,8 +37,9 @@ jobs:
           fi
 
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@6bed0761d98439e5a578e2877258200ad565ba87 # stable
         with:
+          toolchain: stable
           targets: i686-unknown-linux-gnu,i686-pc-windows-msvc
 
       - name: Install cross-compilation tools
@@ -135,7 +136,7 @@ jobs:
           cat release_body.md
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           name: ${{ github.ref_name }}
           body_path: release_body.md
