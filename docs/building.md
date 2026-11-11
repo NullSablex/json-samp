@@ -41,7 +41,7 @@ json_set_null(doc, "clan");      // explicit JSON null
 !!! tip "Nested writes"
     To set values deep inside a document, use the
     [typed path setters](paths.md#typed-setters) (`json_set_int_at`, ...) or
-    [`json_set_at`](paths.md#json_set_at) with a raw JSON value.
+    [`json_set_at`](paths.md#json_set_at-raw-value) with a raw JSON value.
 
 ## Serializing
 
